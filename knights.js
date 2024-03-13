@@ -11,4 +11,27 @@ function knightMoves(start, end) {
 
     }
 
+    // Perform breadth-first search
+    const queue = [[start]];
+    const visited = new Set();
+
+    while (queue.length > 0) {
+        const path = queue.shift();
+        const currentPos = path[path.length - 1];
+
+        if (currentPos[0] === end[0] && currentPos[1] === end[1]) {
+            return path;
+        }
+
+        for (const move of moves) {
+            const newPos = [currentPos[0] + move[0], currentPos[1] + move[1]];
+            if (withinBoard(newPos) && !visited.has(newPos.toString())) {
+                visited.add(newPos.toString());
+                const newPath = [...path, newPos];
+                queue.push(newPath);
+            }
+        }
+    }
+
+
 }
